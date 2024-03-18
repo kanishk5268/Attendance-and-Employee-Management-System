@@ -1,3 +1,3 @@
 const DB_NAME = "Attendance"
 
-module.exports = DB_NAME;
+export default DB_NAME;

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const accessSchema = new mongoose.Schema(
+const accessSchema = new Schema(
   {
     sAccessRole: {
       type: String,
@@ -35,6 +35,6 @@ const accessSchema = new mongoose.Schema(
   }
 );
 
-const Access = mongoose.model("Access", accessSchema);
+const Access = model("Access", accessSchema);
 
-module.exports = Access;
+export default Access;

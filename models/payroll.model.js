@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const payrollSchema = new mongoose.Schema(
+const payrollSchema = new Schema(
   {
     uId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     sPayDate: {
@@ -24,6 +24,6 @@ const payrollSchema = new mongoose.Schema(
   }
 );
 
-const Payroll = mongoose.model("Payroll", payrollSchema);
+const Payroll = model("Payroll", payrollSchema);
 
-module.exports = Payroll;
+export default Payroll;

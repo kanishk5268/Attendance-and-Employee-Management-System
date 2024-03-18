@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const attendanceSchema = new mongoose.Schema(
+const attendanceSchema = new Schema(
   {
     uId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     sLogIn: {
@@ -34,6 +34,6 @@ const attendanceSchema = new mongoose.Schema(
   }
 );
 
-const Attendance = mongoose.model("Attendance", attendanceSchema);
+const Attendance = model("Attendance", attendanceSchema);
 
-module.exports = Attendance;
+export default Attendance;

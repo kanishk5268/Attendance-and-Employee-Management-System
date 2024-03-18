@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const taskSchema = new mongoose.Schema(
+const taskSchema = new Schema(
   {
     uId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Users",
     },
     sTaskAssigned: {
@@ -40,6 +40,6 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
-const Task = mongoose.model("Task", taskSchema);
+const Task = model("Task", taskSchema);
 
-module.exports = Task;
+export default Task;

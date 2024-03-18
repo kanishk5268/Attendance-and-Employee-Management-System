@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const reportSchema = new mongoose.Schema(
+const reportSchema = new Schema(
   {
     uId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Users",
     },
     // sPerformance:{
@@ -11,11 +11,11 @@ const reportSchema = new mongoose.Schema(
     //     ref:"Performance"
     // },
     sAttendance: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Attendance",
     },
     sLeave: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Leave",
     },
   },
@@ -24,6 +24,6 @@ const reportSchema = new mongoose.Schema(
   }
 );
 
-const Report = mongoose.model("Report", reportSchema);
+const Report = model("Report", reportSchema);
 
-module.exports = Report;
+export default Report;

@@ -1,7 +1,7 @@
-const express = require('express');
+import { Router } from 'express';
 
-const adminRoute = express.Router();
+const adminRoute = Router();
 
-adminRoute.post('/add')
+adminRoute.post('/registUser',addUser)
 
-module.exports = adminRoute;
+export default adminRoute;

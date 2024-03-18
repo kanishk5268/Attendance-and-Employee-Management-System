@@ -1,12 +1,12 @@
-const dotenv = require("dotenv");
-const connectDB = require("./database/connectDB");
-const app = require("./app");
+import { config } from "dotenv";
+import connectDB from "./database/connectDB";
+import { listen } from "./app";
 
-dotenv.config({ path: "./.env" });
+config({ path: "./.env" });
 
 connectDB()
   .then(() => {
-    app.listen(process.env.PORT, () => {
+    listen(process.env.PORT, () => {
       console.log(`Server is running on port: ${process.env.PORT}`);
     });
   })

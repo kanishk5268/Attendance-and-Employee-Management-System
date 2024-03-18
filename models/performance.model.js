@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const performanceSchema = new mongoose.Schema(
+const performanceSchema = new Schema(
   {
     uId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Users",
     },
     nTotalTaskAssigned: {
@@ -21,6 +21,6 @@ const performanceSchema = new mongoose.Schema(
   }
 );
 
-const Performance = mongoose.model("Performance", performanceSchema);
+const Performance = model("Performance", performanceSchema);
 
-module.exports = Performance;
+export default Performance;
