@@ -83,7 +83,7 @@ const addUser = asyncHandler(async (req, res, next) => {
   );
 });
 
-const logOutAdmin = asyncHandler(async(req,res)=>{
+const logOutAdmin = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -96,14 +96,65 @@ const logOutAdmin = asyncHandler(async(req,res)=>{
     }
   );
   const options = {
-    httpOnly:true,
-    secure:true,
+    httpOnly: true,
+    secure: true,
   };
-  return res.status(200).clearCookie("accessToken",options).json(new ApiResponse(200,{},"Admin logged out"));
-})
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(200, {}, "Admin logged out"));
+});
 
+const updateUserDetails = asyncHandler(async (req, res) => {
+  const updateUser = await User.findByIdAndUpdate(
+    { _id: req.user?.id },
+    req.body,
+    {
+      new: true,
+    }
+  );
+  if (!updateUser) throw new ApiError(500, "Cannot update the user details");
 
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { _id: updateUser._id },
+        "Employee details are updated successfully"
+      )
+    );
+});
 
+const deleteUser = asyncHandler(async (req, res) => {
+  const _id = req.params.id;
+  if (!_id) throw new ApiError(400, "User id is required.");
+  const deletedUser = await User.findOneAndDelete({ _id });
+  if (!deletedUser) throw new ApiError(500, "Can't delete user.");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, deleteUser, "User is deleted successfully."));
+});
+
+const updateAdminDetails = asyncHandler(async (req, res) => {
+  if (!req.user?.bIsAdmin)
+    throw new ApiError(400, "You don't have required permissions");
+  const updatedAdmin = await Admin.findByIdAndUpdate(
+    { _id: req.user?._id },
+    req.boody,
+    { new: true }
+  );
+  if (!updatedAdmin) throw new ApiError(500, "can't update admin details.");
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { _id: updatedAdmin._id },
+        "admin is successfully updated."
+      )
+    );
+});
 // const getJwt = asyncHandler(async (req, res) => {
 //   const user = await User.findOne({ _id: req.body.id });
 //   const token = await user.generateAccessToken();
@@ -112,4 +163,4 @@ const logOutAdmin = asyncHandler(async(req,res)=>{
 //   });
 // });
 
-export { addUser,logOutAdmin };
+export { addUser, logOutAdmin, updateUserDetails, deleteUser };
