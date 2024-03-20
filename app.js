@@ -1,7 +1,7 @@
-import express,{json,urlencoded} from "express";
+import express, { json, urlencoded } from "express";
 import cors from "cors";
-import adminRoute from "./routes/admin.route";
-import { urlencoded } from "express";
+import cookieParser from "cookie-parser";
+import adminRouter from "./routes/admin.route.js";
 
 //App
 const app = express();
@@ -25,8 +25,9 @@ app.use(
   })
 );
 app.use(express.static("public"));
+app.use(cookieParser());
 
 //Routes
-app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/admin", adminRouter);
 
 export default app;
