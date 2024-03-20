@@ -24,4 +24,3 @@ const verifyJwt = asyncHandler(async (req, res, next) => {
 export default verifyJwt;
 
 
-// req.cookies?.accessToken ||

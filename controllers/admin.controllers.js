@@ -83,6 +83,25 @@ const addUser = asyncHandler(async (req, res, next) => {
   );
 });
 
+const logOutAdmin = asyncHandler(async(req,res)=>{
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        accessToken: undefined,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+  const options = {
+    httpOnly:true,
+    secure:true,
+  };
+  return res.status(200).clearCookie("accessToken",options).json(new ApiResponse(200,{},"Admin logged out"));
+})
+
 
 
 // const getJwt = asyncHandler(async (req, res) => {
@@ -93,4 +112,4 @@ const addUser = asyncHandler(async (req, res, next) => {
 //   });
 // });
 
-export { addUser };
+export { addUser,logOutAdmin };
