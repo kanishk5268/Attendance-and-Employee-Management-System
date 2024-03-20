@@ -1,0 +1,4 @@
+.nav::before {
+    content: '';
+    @apply absolute w-[4rem] h-[4rem] left-0 bottom-[-4rem] rounded-full shadow-[-2rem_-2rem_0] shadow-mywhite 
+}
