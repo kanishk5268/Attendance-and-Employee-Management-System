@@ -2,6 +2,7 @@ import { ApiError, ApiResponse, asyncHandler } from "./../utils/index.js";
 import User from "./../models/user.model.js";
 import { config } from "dotenv";
 import checkAccess from "../middlewares/checkAccess.middleware.js";
+import Leave from "../models/leave.model.js";
 config();
 
 const addUser = asyncHandler(async (req, res, next) => {
@@ -136,25 +137,43 @@ const deleteUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, deleteUser, "User is deleted successfully."));
 });
 
-const updateAdminDetails = asyncHandler(async (req, res) => {
-  if (!req.user?.bIsAdmin)
-    throw new ApiError(400, "You don't have required permissions");
-  const updatedAdmin = await Admin.findByIdAndUpdate(
-    { _id: req.user?._id },
-    req.boody,
-    { new: true }
-  );
-  if (!updatedAdmin) throw new ApiError(500, "can't update admin details.");
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        { _id: updatedAdmin._id },
-        "admin is successfully updated."
-      )
-    );
-});
+// const updateAdminDetails = asyncHandler(async (req, res) => {
+//   if (!req.user?.bIsAdmin)
+//     throw new ApiError(400, "You don't have required permissions");
+//   const updatedAdmin = await Admin.findByIdAndUpdate(
+//     { _id: req.user?._id },
+//     req.boody,
+//     { new: true }
+//   );
+//   if (!updatedAdmin) throw new ApiError(500, "can't update admin details.");
+//   return res
+//     .status(200)
+//     .json(
+//       new ApiResponse(
+//         200,
+//         { _id: updatedAdmin._id },
+//         "admin is successfully updated."
+//       )
+//     );
+// });
+
+const approveLeave = asyncHandler(async(req,res)=>{
+  const uId = req.header("uId")
+  const _id = req.header("_id")
+  console.log(uId,_id);
+  const user = await Leave.findOneAndUpdate({_id,uId},{sStatus:"approved"});
+  if(!user)throw new ApiError(400,"Leave request not found");
+  res.status(200).json(new ApiResponse(200,{},"Leave Approved"))
+})
+
+const rejectLeave = asyncHandler(async(req,res)=>{
+  const user = await Leave.findById(req.user?._id);
+  if(!user)throw new ApiError(400,"Leave request not found");
+  if(user.sStatus == "pending"){
+    return user.sStatus[2];
+  }
+  res.status(200).json(new ApiResponse(200,{},"Leave Rejected"))
+})
 // const getJwt = asyncHandler(async (req, res) => {
 //   const user = await User.findOne({ _id: req.body.id });
 //   const token = await user.generateAccessToken();
@@ -163,4 +182,4 @@ const updateAdminDetails = asyncHandler(async (req, res) => {
 //   });
 // });
 
-export { addUser, logOutAdmin, updateUserDetails, deleteUser };
+export { addUser, logOutAdmin, updateUserDetails, deleteUser,approveLeave,rejectLeave };

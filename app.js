@@ -6,6 +6,7 @@ import userRouter from "./routes/user.route.js";
 
 //App
 const app = express();
+app.disable("x-powered-by");
 
 // Middlewares
 app.use(

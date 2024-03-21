@@ -4,13 +4,14 @@ const leaveSchema = new Schema(
   {
     uId: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
     },
     sStatus: {
       type: String,
       required: [true, "Status is required"],
       enum: ["pending", "approved", "rejected"],
       trim: true,
+      default:'pending'
     },
     sLeaveType: {
       type: String,
@@ -18,23 +19,23 @@ const leaveSchema = new Schema(
       enum: ["half day", "full day"],
       trim: true,
     },
-    dtFromDate: {
+    dFromDate: {
       type: Date,
       required: [true, "From date is required"],
     },
-    dtToDate: {
+    dToDate: {
       type: Date,
       required: [true, "To date is required"],
     },
-    dtFromTime: {
-      type: Date,
+    tFromTime: {
+      type: String,
       required: [true, "From time is required"],
     },
-    dtToTime: {
-      type: Date,
+    tToTime: {
+      type: String,
       required: [true, "To time is required"],
     },
-    sTypeOfLeave: {
+    sSubjectOfLeave: {
       type: String,
       required: [true, "Type of leave is required"],
       enum: [
